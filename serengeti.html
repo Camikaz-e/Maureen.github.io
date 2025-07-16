@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SERENGETI NATIONAL PARK</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="icon" href="assets/icons/favicon.ico">
+  <style>
+    /* Enhanced Navigation Styles */
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f57c00, #ff9800);
+      transition: all 0.4s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::before {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      transform: translateY(-2px);
+      color: #f57c00;
+    }
+
+    /* Package Hero Section */
+    .package-hero {
+      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4)), url('assets/img/poster1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* Floating Cards */
+    .floating-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .floating-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    }
+
+    /* Price Badge */
+    .price-badge {
+      background: linear-gradient(135deg, #f57c00, #ff9800);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 50px;
+      font-size: 2rem;
+      font-weight: bold;
+      box-shadow: 0 10px 30px rgba(245, 124, 0, 0.3);
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(245, 124, 0, 0.3);
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(245, 124, 0, 0.5);
+      }
+    }
+
+    /* Timeline Styles */
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #4a5d23, #8b9a41);
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 80px;
+      margin-bottom: 40px;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: 18px;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #4a5d23, #8b9a41);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(74, 93, 35, 0.3);
+    }
+
+    /* Gallery Styles */
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(74, 93, 35, 0.8), rgba(139, 154, 65, 0.8));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    /* Booking Form */
+    .booking-form {
+      background: linear-gradient(135deg, #4a5d23 0%, #8b9a41 100%);
+      border-radius: 20px;
+      padding: 40px;
+      color: white;
+    }
+
+    .form-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .timeline-item {
+        padding-left: 60px;
+      }
+
+      .timeline::before {
+        left: 20px;
+      }
+
+      .timeline-marker {
+        left: 8px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Top Contact Info -->
+  <div class="text-white py-2 text-sm" style="background-color: #4a5d23;">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <span class="flex items-center space-x-1 transition-colors duration-300 cursor-pointer" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M6.62 10.79a16.001 16.001 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C7.61 21 0 13.39 0 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02z"/>
+          </svg>
+          +255 626 331 871
+        </span>
+        <span class="flex items-center space-x-1 transition-colors duration-300 cursor-pointer" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6c0-1.1.9-2 2-2zm0 4l8 5 8-5"/>
+          </svg>
+          info@armadillo-adventures.com
+        </span>
+        <span class="flex items-center space-x-1 transition-colors duration-300 cursor-pointer" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/>
+          </svg>
+          Arusha, Tanzania
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="transform hover:scale-105 transition-transform duration-300">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-yswsDb1wlBKzX3nnOoLMru4012rMTF.png" alt="Armadillo Adventures Logo" class="h-24">
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav flex items-center space-x-6 text-gray-800 text-sm font-semibold">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="index.html#about" class="nav-link">ABOUT US</a>
+        <a href="index.html#featured-adventures" class="nav-link">SAFARIS</a>
+        <a href="index.html#fleet" class="nav-link">FLEET</a>
+        <a href="index.html#contact" class="text-white px-4 py-2 rounded shadow" style="background-color: #4a5d23;">CONTACT US</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Package Hero Section -->
+  <section class="package-hero min-h-screen flex items-center justify-center text-white relative">
+    <div class="absolute inset-0 bg-black opacity-30"></div>
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <div class="mb-8">
+        <span class="inline-block text-white px-6 py-2 rounded-full text-sm font-bold mb-4" style="background-color: #f57c00;">5 DAYS SAFARI</span>
+        <h1 class="text-6xl md:text-7xl font-extrabold mb-6 drop-shadow-2xl">
+          SERENGETI NATIONAL PARK
+        </h1>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 drop-shadow-xl" style="color: #ff9800;">
+          The Crown Jewel of African Safaris
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 drop-shadow-lg max-w-3xl mx-auto leading-relaxed">
+          The Serengeti is the crown jewel of African safaris—a land of golden grasslands, rolling savannahs, and one of nature’s greatest spectacles: the Great Wildebeest Migration.
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+        <div class="price-badge">
+          $3,500
+        </div>
+        <div class="text-center">
+          <p class="text-lg mb-2">Starting from</p>
+          <p class="text-sm opacity-80">Per person (based on double occupancy)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Package Overview -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <div class="floating-card p-8 mb-8">
+            <h2 class="text-4xl font-bold mb-6" style="color: #4a5d23;">Package Overview</h2>
+            <div class="prose prose-lg max-w-none">
+              <p class="text-gray-700 leading-relaxed mb-6">
+                Embark on a classic safari adventure in the legendary Serengeti National Park. Witness the drama of the Great Migration, where herds thunder across the plains and predators stalk the grasslands. Enjoy game drives through endless savannah, marvel at acacia-dotted landscapes, and experience the magic of sunrise and sunset in the wild.
+              </p>
+              <p class="text-gray-700 leading-relaxed mb-6">
+                This 5-day safari includes expertly guided game drives, luxury tented camp or lodge accommodation, and opportunities to see the Big Five, cheetahs, giraffes, and more. From the Seronera Valley’s year-round wildlife to the Mara River’s dramatic crossings, every day brings a new adventure.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div class="p-6 rounded-lg" style="background-color: rgba(74, 93, 35, 0.05);">
+                  <h4 class="font-bold mb-3 flex items-center" style="color: #4a5d23;">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    What's Included
+                  </h4>
+                  <ul class="text-sm text-gray-700 space-y-2">
+                    <li>• 4 nights luxury tented camp/lodge accommodation</li>
+                    <li>• All meals and soft drinks</li>
+                    <li>• Daily game drives</li>
+                    <li>• Professional safari guide</li>
+                    <li>• Park fees and conservation charges</li>
+                    <li>• Airport transfers (Arusha/Serengeti)</li>
+                  </ul>
+                </div>
+                <div class="p-6 rounded-lg" style="background-color: rgba(139, 154, 65, 0.05);">
+                  <h4 class="font-bold mb-3 flex items-center" style="color: #8b9a41;">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Best Time to Visit
+                  </h4>
+                  <ul class="text-sm text-gray-700 space-y-2">
+                    <li>• Year-round wildlife viewing</li>
+                    <li>• Migration: June - October (river crossings)</li>
+                    <li>• Calving season: Jan - March (southern plains)</li>
+                    <li>• Big cats and predators all year</li>
+                    <li>• Mild, dry weather: June - October</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Day by Day Itinerary -->
+          <div class="floating-card p-8">
+            <h3 class="text-3xl font-bold mb-8" style="color: #4a5d23;">Day by Day Itinerary</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-marker">1</div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 class="text-xl font-bold text-gray-800 mb-3">Arrival in Arusha & Transfer to Serengeti</h4>
+                  <p class="text-gray-600 mb-4">
+                    Arrive in Arusha, meet your safari guide, and transfer to Serengeti National Park by road or bush flight. Enjoy your first game drive en route to your luxury camp or lodge. Settle in, soak up the views, and enjoy a welcome dinner under the stars.
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(74, 93, 35, 0.1); color: #4a5d23;">Transfer</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(139, 154, 65, 0.1); color: #8b9a41;">Game Drive</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(245, 124, 0, 0.1); color: #f57c00;">Welcome Dinner</span>
+                  </div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-marker">2</div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 class="text-xl font-bold text-gray-800 mb-3">Central Serengeti & Seronera Valley</h4>
+                  <p class="text-gray-600 mb-4">
+                    Explore the heart of Serengeti, famous for its big cats and abundant wildlife. Enjoy morning and afternoon game drives in the Seronera Valley, spotting lions, leopards, elephants, and herds of wildebeest and zebra. Optional hot air balloon safari at sunrise.
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(74, 93, 35, 0.1); color: #4a5d23;">Game Drives</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(139, 154, 65, 0.1); color: #8b9a41;">Big Cats</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(255, 152, 0, 0.1); color: #ff9800;">Balloon Safari</span>
+                  </div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-marker">3</div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 class="text-xl font-bold text-gray-800 mb-3">Western Corridor & Grumeti River</h4>
+                  <p class="text-gray-600 mb-4">
+                    Journey to the Western Corridor, home to the dramatic Grumeti River crossings during migration. Watch for crocodiles, hippos, and herds braving the waters. Enjoy a picnic lunch in the bush and spot giraffes, buffalo, and a variety of birdlife.
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(245, 124, 0, 0.1); color: #f57c00;">River Crossing</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(255, 152, 0, 0.1); color: #ff9800;">Picnic Lunch</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(93, 64, 55, 0.1); color: #5d4037;">Bird Watching</span>
+                  </div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-marker">4</div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 class="text-xl font-bold text-gray-800 mb-3">Northern Serengeti & Mara River</h4>
+                  <p class="text-gray-600 mb-4">
+                    Head north to the Mara River, the stage for the most thrilling migration crossings. Witness herds gathering at the riverbanks, predators lurking, and the raw drama of survival. Evening sundowner with panoramic views of the plains.
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(74, 93, 35, 0.1); color: #4a5d23;">Mara River</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(139, 154, 65, 0.1); color: #8b9a41;">Migration</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(245, 124, 0, 0.1); color: #f57c00;">Sundowner</span>
+                  </div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-marker">5</div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 class="text-xl font-bold text-gray-800 mb-3">Final Game Drive & Departure</h4>
+                  <p class="text-gray-600 mb-4">
+                    Enjoy a final sunrise game drive, capturing last glimpses of the Serengeti’s wildlife. After breakfast, transfer back to Arusha or onward to your next destination, carrying unforgettable memories of Africa’s wild heart.
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(74, 93, 35, 0.1); color: #4a5d23;">Game Drive</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(139, 154, 65, 0.1); color: #8b9a41;">Farewell</span>
+                    <span class="px-3 py-1 rounded-full text-sm" style="background-color: rgba(107, 114, 128, 0.1); color: #6b7280;">Departure</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+
+          <!-- Booking Form -->
+          <div class="booking-form mb-8">
+            <h3 class="text-2xl font-bold mb-6">Book This Adventure</h3>
+            <form class="space-y-4">
+              <div>
+                <input type="text" placeholder="Full Name" class="form-input" required>
+              </div>
+              <div>
+                <input type="email" placeholder="Email Address" class="form-input" required>
+              </div>
+              <div>
+                <input type="tel" placeholder="Phone Number" class="form-input" required>
+              </div>
+              <div>
+                <input type="date" placeholder="Preferred Date" class="form-input" required>
+              </div>
+              <div>
+                <select class="form-input" required>
+                  <option value="">Number of Travelers</option>
+                  <option value="1">1 Person</option>
+                  <option value="2">2 People</option>
+                  <option value="3">3 People</option>
+                  <option value="4">4 People</option>
+                  <option value="5+">5+ People</option>
+                </select>
+              </div>
+              <div>
+                <textarea placeholder="Special Requests or Questions" class="form-input h-24 resize-none"></textarea>
+              </div>
+              <button type="submit" class="w-full text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105" style="background-color: #f57c00;">
+                REQUEST BOOKING
+              </button>
+            </form>
+          </div>
+
+          <!-- Quick Facts -->
+          <div class="floating-card p-6 mb-8">
+            <h4 class="text-xl font-bold mb-4 text-gray-800">Quick Facts</h4>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Duration:</span>
+                <span class="font-semibold">5 Days / 4 Nights</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Group Size:</span>
+                <span class="font-semibold">Max 16 People</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Difficulty:</span>
+                <span class="font-semibold" style="color: #8b9a41;">Easy</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Best Season:</span>
+                <span class="font-semibold">June - October (Migration)</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Accommodation:</span>
+                <span class="font-semibold">Luxury Tented Camp/Lodge</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="floating-card p-6">
+            <h4 class="text-xl font-bold mb-4 text-gray-800">Need Help?</h4>
+            <div class="space-y-3">
+              <div class="flex items-center space-x-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #4a5d23;">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span class="text-gray-700">+255 626 331 871</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #4a5d23;">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span class="text-gray-700">info@armadillo-adventures.com</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #4a5d23;">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-gray-700">24/7 Support Available</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12" style="color: #4a5d23;">Experience Gallery</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Gallery Image 1 -->
+        <div class="gallery-item h-64">
+          <img src="assets/img/beats.jpg" alt="Great Migration" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <h4 class="text-xl font-bold mb-2">The Great Migration</h4>
+            <p class="text-sm">Millions of wildebeest on the move</p>
+          </div>
+        </div>
+        <div class="gallery-item h-64">
+          <img src="assets/img/leo.jpg" alt="Lion Pride" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <h4 class="text-xl font-bold mb-2">Lion Prides</h4>
+            <p class="text-sm">Spot the kings of the savannah</p>
+          </div>
+        </div>
+        <div class="gallery-item h-64">
+          <img src="assets/img/gal1.jpg" alt="Serengeti Plains" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <h4 class="text-xl font-bold mb-2">Endless Plains</h4>
+            <p class="text-sm">Golden grasslands as far as the eye can see</p>
+          </div>
+        </div>
+        <div class="gallery-item h-64">
+          <img src="assets/img/Elephant.jpg" alt="Elephants" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <h4 class="text-xl font-bold mb-2">Elephant Herds</h4>
+            <p class="text-sm">Gentle giants roaming free</p>
+          </div>
+        </div>
+        <div class="gallery-item h-64">
+          <img src="assets/img/Buffalo.jpg" alt="Buffalo" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <h4 class="text-xl font-bold mb-2">Buffalo & Giraffes</h4>
+            <p class="text-sm">Classic safari wildlife encounters</p>
+          </div>
+        </div>
+        <div class="gallery-item h-64">
+          <img src="assets/img/wild.jpg" alt="Sunset Safari" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <h4 class="text-xl font-bold mb-2">Sunset Safari</h4>
+            <p class="text-sm">Unforgettable evenings in the bush</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div>
+          <div class="flex items-center space-x-4 mb-6">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-yswsDb1wlBKzX3nnOoLMru4012rMTF.png" alt="Armadillo Adventures" class="h-16 w-16 rounded-full bg-white p-2">
+            <div>
+              <h3 class="text-xl font-bold" style="color: #ff9800;">ARMADILLO</h3>
+              <p style="color: #f57c00;">ADVENTURES</p>
+            </div>
+          </div>
+          <p class="text-gray-300 leading-relaxed">
+            Experience the magic of Tanzania with Armadillo Adventures. We specialize in crafting unforgettable safari adventures and cultural experiences.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-bold mb-4" style="color: #ff9800;">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">Home</a></li>
+            <li><a href="index.html#about" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">About Us</a></li>
+            <li><a href="index.html#featured-adventures" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">Safari Packages</a></li>
+            <li><a href="index.html#contact" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-bold mb-4" style="color: #ff9800;">Contact Info</h4>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ff9800;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              </svg>
+              <span class="text-gray-300">+255 626 331 871</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ff9800;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <span class="text-gray-300">info@armadillo-adventures.com</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ff9800;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span class="text-gray-300">Arusha, Tanzania</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-gray-600 mt-8 pt-8 text-center">
+        <p class="text-gray-400">&copy; 2025 Armadillo Adventures. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

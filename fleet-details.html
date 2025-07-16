@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fleet Details - Armadillo Adventures</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="icon" href="assets/icons/favicon.ico">
+  <style>
+    /* Enhanced Navigation Styles */
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f57c00, #ff9800);
+      transition: all 0.4s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::before {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      transform: translateY(-2px);
+      color: #f57c00;
+    }
+
+    /* Fleet Hero Section */
+    .fleet-hero {
+      background: linear-gradient(135deg, rgba(74, 93, 35, 0.9), rgba(139, 154, 65, 0.9)), url('assets/img/vehi1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* Transfer Cards */
+    .transfer-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .transfer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(74, 93, 35, 0.02), rgba(139, 154, 65, 0.02));
+      z-index: 0;
+    }
+
+    .transfer-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .transfer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .transfer-card.arusha-region {
+      border-left-color: #4a5d23;
+    }
+
+    .transfer-card.arusha-region:hover {
+      border-left-color: #6b7c32;
+    }
+
+    .transfer-card.outside-arusha {
+      border-left-color: #8b9a41;
+    }
+
+    .transfer-card.outside-arusha:hover {
+      border-left-color: #4a5d23;
+    }
+
+    .transfer-card.other-regions {
+      border-left-color: #f57c00;
+    }
+
+    .transfer-card.other-regions:hover {
+      border-left-color: #ff9800;
+    }
+
+    .transfer-card.kenya-transfers {
+      border-left-color: #5d4037;
+    }
+
+    .transfer-card.kenya-transfers:hover {
+      border-left-color: #8d6e63;
+    }
+
+    /* Transfer Item Styles */
+    .transfer-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: rgba(248, 250, 252, 0.8);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .transfer-item:hover {
+      background: rgba(74, 93, 35, 0.05);
+      border-left-color: #4a5d23;
+      transform: translateX(5px);
+    }
+
+    .transfer-route {
+      font-weight: 600;
+      color: #374151;
+      flex: 1;
+    }
+
+    .transfer-price {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #8b9a41;
+      background: rgba(139, 154, 65, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    /* Contact Section Styles */
+    .contact-highlight {
+      background: linear-gradient(135deg, #4a5d23 0%, #8b9a41 100%);
+      border-radius: 20px;
+      padding: 3rem;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-highlight::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .contact-highlight:hover::before {
+      left: 100%;
+    }
+
+    /* Icon Styles */
+    .section-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #4a5d23, #8b9a41);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .section-icon:hover {
+      transform: scale(1.1);
+      background: linear-gradient(135deg, #f57c00, #ff9800);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .transfer-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+      }
+
+      .transfer-route {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    /* Animation for page load */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Top Contact Info -->
+  <div class="text-white py-2 text-sm" style="background-color: #4a5d23;">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <span class="flex items-center space-x-1 transition-colors duration-300 cursor-pointer" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M6.62 10.79a16.001 16.001 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C7.61 21 0 13.39 0 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02z"/>
+          </svg>
+          +255 626 331 871
+        </span>
+        <span class="flex items-center space-x-1 transition-colors duration-300 cursor-pointer" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6c0-1.1.9-2 2-2zm0 4l8 5 8-5"/>
+          </svg>
+          info@armadillo-adventures.com
+        </span>
+        <span class="flex items-center space-x-1 transition-colors duration-300 cursor-pointer" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/>
+          </svg>
+          Arusha, Tanzania
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="transform hover:scale-105 transition-transform duration-300">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-yswsDb1wlBKzX3nnOoLMru4012rMTF.png" alt="Armadillo Adventures Logo" class="h-24">
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav flex items-center space-x-6 text-gray-800 text-sm font-semibold">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="about-us.html" class="nav-link">ABOUT US</a>
+        <a href="index.html#featured-adventures" class="nav-link">SAFARIS</a>
+        <a href="index.html#fleet" class="text-white px-4 py-2 rounded" style="background-color: #f57c00;">FLEET</a>
+        <a href="index.html#contact" class="text-white px-4 py-2 rounded shadow" style="background-color: #4a5d23;">CONTACT US</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Fleet Hero Section -->
+  <section class="fleet-hero min-h-screen flex items-center justify-center text-white relative">
+    <div class="absolute inset-0 bg-black opacity-30"></div>
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto animate-fade-in-up">
+      <div class="section-icon">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+        </svg>
+      </div>
+      <h1 class="text-6xl md:text-7xl font-extrabold mb-6 drop-shadow-2xl">
+        FLEET DETAILS
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 drop-shadow-lg leading-relaxed">
+        Affordable & Reliable Transfer Services Across Tanzania and Beyond
+      </p>
+      <div class="w-24 h-1 rounded-full mx-auto" style="background: linear-gradient(to right, #f57c00, #ff9800);"></div>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16 animate-fade-in-up">
+        <h2 class="text-5xl font-bold mb-6 bg-clip-text text-transparent" style="background: linear-gradient(to right, #4a5d23, #8b9a41); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          Professional Transfer Services
+        </h2>
+        <div class="w-24 h-1 rounded-full mx-auto mb-8" style="background: linear-gradient(to right, #4a5d23, #8b9a41);"></div>
+        <p class="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+          We are delighted to offer affordable and reliable transfer services for our valued individual clients, corporate customers, and partner tour operators. Whether you're traveling within the Arusha and Kilimanjaro regions, exploring other destinations in Tanzania, or crossing borders into Kenya, we've got you covered.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transfers Within Arusha and Kilimanjaro Region -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="transfer-card arusha-region animate-fade-in-up">
+        <div class="text-center mb-8">
+          <div class="section-icon">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-4xl font-bold mb-4" style="color: #4a5d23;">Transfers Within Arusha and Kilimanjaro Region</h2>
+          <p class="text-gray-600 text-lg">Local transfers and airport connections in the Northern Tanzania region</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha Airport (ARK) - Arusha Town</span>
+            <span class="transfer-price">US$33</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Kilimanjaro International Airport (JRO) - Arusha Town</span>
+            <span class="transfer-price">US$80</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha City Tour</span>
+            <span class="transfer-price">US$80</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Outskirts (Usa River, Wildlife residence, etc.)</span>
+            <span class="transfer-price">US$70</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Napuru Waterfalls (Half Day)</span>
+            <span class="transfer-price">US$80</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Napuru Waterfalls (Full Day)</span>
+            <span class="transfer-price">US$150</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Kili Golf</span>
+            <span class="transfer-price">US$80</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha – Materuni Waterfalls</span>
+            <span class="transfer-price">US$150</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Serval Wildlife</span>
+            <span class="transfer-price">US$130</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Kikuletwa Hot Springs (Maji Moto)</span>
+            <span class="transfer-price">US$120</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Machame Gate</span>
+            <span class="transfer-price">US$150</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Mweka Gate</span>
+            <span class="transfer-price">US$150</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Marangu Gate</span>
+            <span class="transfer-price">US$160</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transfers Outside Arusha -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="transfer-card outside-arusha animate-fade-in-up">
+        <div class="text-center mb-8">
+          <div class="section-icon">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-4xl font-bold mb-4" style="color: #8b9a41;">Transfers Outside Arusha</h2>
+          <p class="text-gray-600 text-lg">National park gates and safari destinations from Arusha</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Mto wa Mbu & Manyara National Park Gate</span>
+            <span class="transfer-price">US$190</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Karatu & Ngorongoro Gate</span>
+            <span class="transfer-price">US$300</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Tarangire National Park Gate</span>
+            <span class="transfer-price">US$185</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transfers to Other Regions -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="transfer-card other-regions animate-fade-in-up">
+        <div class="text-center mb-8">
+          <div class="section-icon">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+            </svg>
+          </div>
+          <h2 class="text-4xl font-bold mb-4" style="color: #f57c00;">Transfers to Other Regions</h2>
+          <p class="text-gray-600 text-lg">Long-distance transfers to major cities across Tanzania</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Lushoto</span>
+            <span class="transfer-price">US$400</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Tanga</span>
+            <span class="transfer-price">US$450</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Dar Es Salaam</span>
+            <span class="transfer-price">US$500</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transfers to Kenya -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="transfer-card kenya-transfers animate-fade-in-up">
+        <div class="text-center mb-8">
+          <div class="section-icon">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-4xl font-bold mb-4" style="color: #5d4037;">Transfers to Kenya</h2>
+          <p class="text-gray-600 text-lg">Cross-border transfers to major Kenyan destinations and airports</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Nairobi (Jomo Kenyatta International Airport – JKIA)</span>
+            <span class="transfer-price">US$450</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Nairobi (Westlands)</span>
+            <span class="transfer-price">US$500</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Nairobi (Wilson Airport – WIL)</span>
+            <span class="transfer-price">US$500</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Nairobi (Serena, Kempinski)</span>
+            <span class="transfer-price">US$500</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Mombasa Town</span>
+            <span class="transfer-price">US$500</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha - Mombasa (Diani)</span>
+            <span class="transfer-price">US$600</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha – Namanga Border</span>
+            <span class="transfer-price">US$350</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha – Tarakea Border</span>
+            <span class="transfer-price">US$400</span>
+          </div>
+          <div class="transfer-item">
+            <span class="transfer-route">Arusha – Taveta Border</span>
+            <span class="transfer-price">US$430</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="contact-highlight animate-fade-in-up">
+        <div class="section-icon">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+        </div>
+        <h2 class="text-4xl font-bold mb-6">Contact Us for Bookings</h2>
+        <p class="text-xl mb-8 opacity-90">
+          For bookings and inquiries, reach out to our reservations team
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+          <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur-sm">
+            <div class="flex items-center mb-4">
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <h3 class="text-xl font-bold">Email</h3>
+            </div>
+            <p class="text-lg">info@armadilloadventures.com</p>
+          </div>
+
+          <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur-sm">
+            <div class="flex items-center mb-4">
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              </svg>
+              <h3 class="text-xl font-bold">WhatsApp</h3>
+            </div>
+            <p class="text-lg">+255 626 331 871</p>
+            <p class="text-sm opacity-80">(Available 24/7)</p>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <p class="text-lg font-semibold">
+            Experience comfort, safety, and professionalism with Armadillo Adventures - your trusted travel partner!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div>
+          <div class="flex items-center space-x-4 mb-6">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-yswsDb1wlBKzX3nnOoLMru4012rMTF.png" alt="Armadillo Adventures" class="h-16 w-16 rounded-full bg-white p-2">
+            <div>
+              <h3 class="text-xl font-bold" style="color: #ff9800;">ARMADILLO</h3>
+              <p style="color: #f57c00;">ADVENTURES</p>
+            </div>
+          </div>
+          <p class="text-gray-300 leading-relaxed">
+            Experience the magic of Tanzania with Armadillo Adventures. We specialize in crafting unforgettable safari adventures and cultural experiences.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-bold mb-4" style="color: #ff9800;">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">Home</a></li>
+            <li><a href="about-us.html" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">About Us</a></li>
+            <li><a href="index.html#featured-adventures" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">Safari Packages</a></li>
+            <li><a href="index.html#contact" class="text-gray-300 transition-colors" style="--tw-text-opacity: 1; color: rgba(255, 152, 0, var(--tw-text-opacity));">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-bold mb-4" style="color: #ff9800;">Contact Info</h4>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ff9800;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              </svg>
+              <span class="text-gray-300">+255 626 331 871</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ff9800;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <span class="text-gray-300">info@armadillo-adventures.com</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ff9800;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span class="text-gray-300">Arusha, Tanzania</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-gray-600 mt-8 pt-8 text-center">
+        <p class="text-gray-400">&copy; 2025 Armadillo Adventures. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
